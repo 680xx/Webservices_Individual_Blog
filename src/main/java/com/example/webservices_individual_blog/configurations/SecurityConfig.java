@@ -17,12 +17,6 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    // Authentication, Authorization, users, roles, crypto
-    // Authentication = Är du inloggad
-    // Authorization = Vilken roll/behörighet har du, vad har du åtkomst till
-    // Crypto = Kryptering av t.ex. lösenord
-
-    // SecurityFilterChain (Böna) = Kedja av filter att ta sig igenom
 
     @Autowired
     private JwtAuthConverter jwtAuthConverter;
@@ -35,7 +29,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        // http.csrf((csrf)-> csrf.disable());          // Disables CSRF
         http.csrf((csrf) -> csrf.disable()).authorizeHttpRequests((auth) -> auth.requestMatchers("/api/***", "api/posts/***").permitAll().anyRequest().authenticated())
 
                 .oauth2ResourceServer((oath2) -> oath2.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))

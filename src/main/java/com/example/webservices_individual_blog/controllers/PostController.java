@@ -1,6 +1,7 @@
 package com.example.webservices_individual_blog.controllers;
 
 import com.example.webservices_individual_blog.entities.Post;
+import com.example.webservices_individual_blog.exceptions.ResourceNotFoundException;
 import com.example.webservices_individual_blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,11 @@ public class PostController {
     public ResponseEntity<String> deletePostById(@PathVariable int id) {
         postService.deletePost(id);
         return ResponseEntity.ok("Deleted post with id " + id);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }

@@ -13,21 +13,25 @@ public class PostService implements PostServiceInterface{
     @Autowired
     private PostRepository postRepository;
 
+    // Get all posts
     @Override
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
+    // Get post by id
     @Override
     public Post getPostById(int id) {
         return postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "Id", id));
     }
 
+    // Create a new post
     @Override
     public Post addNewPost(Post post) {
         return postRepository.save(post);
     }
 
+    // Update a post by id
     @Override
     public Post updatePost(int id, Post post) {
         Post updatedPost = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "Id", id));
@@ -35,6 +39,7 @@ public class PostService implements PostServiceInterface{
         return postRepository.save(updatedPost);
     }
 
+    // Delete a post by id
     @Override
     public void deletePost(int id) {
         postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "Id", id));
